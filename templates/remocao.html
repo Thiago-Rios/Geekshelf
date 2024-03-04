@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geekshelf</title>
-    <link rel="stylesheet" href="/static/css/index.css">
+    <title>Remover produto</title>
 </head>
 <body>
     <header class="headerLoja">
@@ -14,10 +13,13 @@
         </div>
         <img src="/img/logo_site.jpeg" alt="logo tipo da geekshelf" title="logotipo do site">
     </header>
-    <h1>Página Inicial do Geekshelf</h1>
-    <input id="inputPesquisa" type="text" placeholder="Pesquise aqui"><button>GO!</button>
-    <main>
-        <p>Aqui ficaram os cards quando forem encontrados</p>
-    </main>
+    <form id="formRemocao">
+        <h3 class="h3Geral">Remoção do produto</h3>
+        <div class="divForm">
+            <label>ID do produto</label>
+            <input type="text" required>
+        </div>
+        <input class="btnForm" type="submit" value="Remover">
+    </form>
 </body>
 </html>
