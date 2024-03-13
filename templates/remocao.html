@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remover produto</title>
-</head>
-<body>
-    <header class="headerLoja">
-        <div>
-            <img src="" alt="icone de login" title="icone de login">
-            <a href="login">Login</a><p>ou</p><a href="cadastro">Sign Up</a>
-        </div>
-        <img src="/img/logo_site.jpeg" alt="logo tipo da geekshelf" title="logotipo do site">
-    </header>
-    <form id="formRemocao">
-        <h3 class="h3Geral">Remoção do produto</h3>
-        <div class="divForm">
-            <label>ID do produto</label>
-            <input type="text" required>
-        </div>
-        <input class="btnForm" type="submit" value="Remover">
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block conteudo %}
+<form id="formRemocao">
+    <h3 class="h3Geral">Remoção do produto</h3>
+    <div class="divForm">
+        <label>ID do produto</label>
+        <input type="text" required>
+    </div>
+    <input class="btnForm" type="submit" value="Remover">
+</form>
+
+{% endblock conteudo %}
