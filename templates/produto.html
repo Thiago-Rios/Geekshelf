@@ -1,4 +1,20 @@
 {% extends 'base.html' %}
 {% block conteudo %}
-<h1>Página de Produto</h1>
+<main>
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ produto.imagem }}" class="img-fluid rounded-start" alt="{{ produto.titulo }}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ produto.titulo }}</h5>
+              <p class="card-text"><small class="text-muted">Autor - {{ produto.autor }}</small></p>
+              <p class="card-text">{{ produto.sinopse }}</p>
+              <p class="card-text"><small class="text-muted">{{ produto.genero }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
 {% endblock conteudo %}

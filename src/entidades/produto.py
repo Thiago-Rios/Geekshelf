@@ -1,14 +1,9 @@
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from PIL import Image
 from io import BytesIO
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://flqprwqe:3n0mkft13qCefWX3ZLDx8313X6LdBzX5@kesavan.db.elephantsql.com/flqprwqe'
-db = SQLAlchemy(app)
+from src.entidades.db_operations import db
 
 class Produto(db.Model):
     __tablename__ = 'produtos'
@@ -28,13 +23,24 @@ class Produto(db.Model):
         self.imagem = imagem
 
     @staticmethod
-    def adicionar_produto(titulo, autor, genero, sinopse, imagem):
-        imagem_png = Image.open(imagem)
+    def adicionar_produto(produto):
+        imagem_png = Image.open(produto.imagem)
         imagem_png = imagem_png.convert('RGB')
         imagem_buffer = BytesIO()
         imagem_png.save(imagem_buffer, format='PNG')
         imagem_buffer = imagem_buffer.getvalue()
 
-        novo_produto = Produto(titulo=titulo, autor=autor, genero=genero, sinopse=sinopse, imagem=imagem_buffer)
+        novo_produto = Produto(titulo=produto.titulo, autor=produto.autor, genero=produto.genero, sinopse=produto.sinopse, imagem=imagem_buffer)
         
-        return novo_produto
+        db.session.add(novo_produto)
+        db.session.commit()
+    
+    @staticmethod
+    def remover_produto(produto_id):
+        produto = Produto.query.get(produto_id)
+
+        db.session.delete(produto)
+        db.session.commit()
+
+
+        
