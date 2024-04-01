@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<main>
+    <h1>Minha biblioteca</h1>
+    <div class="d-flex justify-content-center">
+    {% for produto in meus_produtos %}
+        <div class="card m-1" style="width: 20rem;">
+            <img src="data:image/png;base64,{{ produto.imagem }}" class="card-img-top" alt="Imagem do produto">
+            <div class="card-body">
+            <h5 class="card-title">{{ produto.titulo }}</h5>
+            <p class="card-text">{{ produto.autor }} - {{ produto.genero }}</p>
+            <a href="{{ url_for('produto', produto_id=produto.id) }}" class="btn btn-primary">Detalhes</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</main>
+{% endblock conteudo %}

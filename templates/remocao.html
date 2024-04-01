@@ -1,16 +1,29 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 <main>
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 20rem;">
         <div class="card-body">
-            <form id="formRemocao" method="POST" action="/remover">
-                <h3 class="h3Geral">Remover produto</h3>
-                <div class="form-group">
-                    <label class="form-label">ID do produto</label>
-                    <input type="number" name="produto_id" class="form-control" required>
-                </div>
-                <input class="btn btn-success" type="submit" value="Remover">
-            </form>
+            {% if usuario.admin %}
+                <form id="formRemocao" method="POST" action="/remover">
+                    <h3 class="h3Geral">Remover produto</h3>
+                    <div class="form-group">
+                        <label class="form-label">ID do produto</label>
+                        <input type="number" name="produto_id" class="form-control" required>
+                    </div>
+                    {% with errors = get_flashed_messages(category_filter=["error"]) %}
+                        {% if errors %}
+                            {% for msg in errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ msg }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input class="btn btn-success" type="submit" value="Remover">
+                </form>
+            {% else %}
+                <h3 class="h3Geral">Seu usuário não possui autorização para acessar esta página!</h3>
+            {% endif %}    
         </div>
     </div>
 </main>

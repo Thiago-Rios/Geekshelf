@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 {% block conteudo %}
-<h1>Página Inicial do Geekshelf</h1>
 <main>
-    {% for produto in produtos %}
-    <div class="card" style="width: 18rem;">
-        <img src="data:image/jpeg;base64,{{ produto.imagem }}" class="card-img-top" alt="Imagem do produto">
-        <div class="card-body">
-          <h5 class="card-title">{{ produto.titulo }}</h5>
-          <p class="card-text">{{ produto.autor }} - {{ produto.genero }}</p>
-          <a href="{{ url_for('produto', produto_id=produto.id) }}" class="btn btn-primary">Detalhes</a>
-        </div>
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <form class="d-flex m-1" role="search" method="GET" action="{{ url_for('buscar') }}">
+        <input class="form-control me-2" name="pesquisa" type="search" placeholder="Digite o nome do produto" aria-label="Search">
+        <button class="btn btn-secondary" type="submit">Buscar</button>
+      </form>
     </div>
+  </div>
+  <div class="d-flex">
+    {% for produto in produtos %}
+      <div class="card m-1" style="width: 20rem;">
+          <img src="data:image/jpeg;base64,{{ produto.imagem }}" class="card-img-top" alt="Imagem do produto">
+          <div class="card-body">
+            <h5 class="card-title">{{ produto.titulo }}</h5>
+            <p class="card-text">{{ produto.autor }} - {{ produto.genero }}</p>
+            <a href="{{ url_for('produto', produto_id=produto.id) }}" class="btn btn-primary">Detalhes</a>
+          </div>
+      </div>
     {% endfor %}
+  </div>
 </main>
 {% endblock conteudo %}

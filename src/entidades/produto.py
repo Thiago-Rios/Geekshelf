@@ -13,7 +13,7 @@ class Produto(db.Model):
     genero = db.Column(db.String(60), nullable=False)
     sinopse = db.Column(db.Text, nullable=False)
     imagem = db.Column(db.LargeBinary, nullable=True)
-    avaliacao = db.Column(db.Integer, nullable=True)
+    avaliacao = db.Column(db.Float, nullable=True)
 
     def __init__(self, titulo, autor, genero, sinopse, imagem):
         self.titulo = titulo
@@ -24,10 +24,9 @@ class Produto(db.Model):
 
     @staticmethod
     def adicionar_produto(produto):
-        imagem_png = Image.open(produto.imagem)
-        imagem_png = imagem_png.convert('RGB')
+        imagem = Image.open(produto.imagem)
         imagem_buffer = BytesIO()
-        imagem_png.save(imagem_buffer, format='PNG')
+        imagem.save(imagem_buffer, format='JPEG')
         imagem_buffer = imagem_buffer.getvalue()
 
         novo_produto = Produto(titulo=produto.titulo, autor=produto.autor, genero=produto.genero, sinopse=produto.sinopse, imagem=imagem_buffer)

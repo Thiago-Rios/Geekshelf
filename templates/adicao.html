@@ -1,34 +1,38 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 <main>
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 20rem;">
         <div class="card-body">
-          <form method="POST" enctype="multipart/form-data" action="/adicionar">
-            <h3 class="h3Geral">Adição de produto</h3>
-            <div class="form-group">
-                <label class="form-label">Nome do produto</label>
-                <input type="text" name="titulo" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Autor do produto</label>
-                <input type="text" name="autor" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Gênero do produto</label>
-                <input type="text" name="genero" class="form-control" required>
-            </div>
-            <div>
-                <label class="form-label">Sinopse do produto</label>
-                <textarea class="form-control" name="sinopse" rows="3" placeholder="Insira a sinopse do produto" required></textarea>
-            </div>
-            <div>
-                <label class="form-label">Imagem do produto</label>
-                <input type="file" name="imagem" class="form-control" required>
-            </div>
-            <div>
-                <input class="btn btn-success" type="submit" value="Adicionar">
-            </div>
-        </form>
+            {% if usuario.admin %}
+                <form method="POST" enctype="multipart/form-data" action="/adicionar">
+                    <h3 class="h3Geral">Adição de produto</h3>
+                    <div class="form-group">
+                        <label class="form-label">Nome do produto</label>
+                        <input type="text" name="titulo" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Autor do produto</label>
+                        <input type="text" name="autor" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Gênero do produto</label>
+                        <input type="text" name="genero" class="form-control" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Sinopse do produto</label>
+                        <textarea class="form-control" name="sinopse" rows="3" placeholder="Insira a sinopse do produto" required></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label">Imagem do produto</label>
+                        <input type="file" name="imagem" class="form-control" required>
+                    </div>
+                    <div>
+                        <input class="btn btn-success" type="submit" value="Adicionar">
+                    </div>
+                </form>
+            {% else %}
+                <h3 class="h3Geral">Seu usuário não possui autorização para acessar esta página!</h3>
+            {% endif %}
         </div>
     </div>
 

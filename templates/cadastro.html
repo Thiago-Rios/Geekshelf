@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 <main style="align-content: center;">
-    <h1>Página de Cadastro</h1>
     <form id="formCadastro" method="POST" action="/cadastro">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 20rem;">
             <div class="card-body">
                 <h5 class="card-title">Faça seu Cadastro</h5>
                 <div class="divForm">
@@ -22,6 +21,15 @@
                     <label>Confirme sua Senha</label>
                     <input type="password" class="form-control" name="confirmar_senha" placeholder="Confirme sua Senha" required>
                 </div>
+                {% with errors = get_flashed_messages(category_filter=["error"]) %}
+                    {% if errors %}
+                        {% for msg in errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 <div>
                     <input class="btn btn-success" type="submit" value="Finalizar">
                 </div>

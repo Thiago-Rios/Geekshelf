@@ -2,9 +2,11 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from src.entidades.db_operations import db
-from flask import session, redirect, url_for
 from flask_login import UserMixin
+from src.entidades.biblioteca import Biblioteca
 from werkzeug.security import generate_password_hash, check_password_hash
+
+biblioteca = Biblioteca()
 
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuarios'
@@ -13,6 +15,7 @@ class Usuario(db.Model, UserMixin):
     nome = db.Column(db.String(120), nullable=False)
     senha = db.Column(db.String(120), nullable=False)
     admin = db.Column(db.Boolean, default=False)
+    minha_biblioteca = db.relationship('Produto', secondary=biblioteca.biblioteca, backref=db.backref('usuarios', lazy='dynamic'))
 
     def __repr__(self):
         return '<Usuario %r>' % self.email
@@ -40,5 +43,15 @@ class Usuario(db.Model, UserMixin):
     @staticmethod
     def realizar_logout(sess):
         sess.pop('user_id', None)
+
+    def adicionar_a_biblioteca(self, produto):
+        if produto not in self.minha_biblioteca:
+            self.minha_biblioteca.append(produto)
+            db.session.commit()
+
+    def remover_da_biblioteca(self, produto):
+        if produto in self.minha_biblioteca:
+            self.minha_biblioteca.remove(produto)
+            db.session.commit()
         
     

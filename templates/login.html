@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 {% block conteudo %}
-<h1>Página de login</h1>
 <main>
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">Faça seu login</h5>
             <form id="formLogin" method="POST" action="/login">
-            <div class="form-group">
-                <label class="form-label">E-mail</label>
-                <input type="email" name="email" class="form-control" placeholder="Insira seu E-mail" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Senha</label>
-                <input type="password" name="senha" class="form-control" placeholder="Insira sua Senha" required>
-            </div>
-            <div>
-                <input class="btn btn-success" type="submit" value="Logar">
-            </div>
-            <a href="cadastro">Ainda não é cadastrado? Clique aqui</a>
-        </form>
+                <div class="form-group">
+                    <label class="form-label">E-mail</label>
+                    <input type="email" name="email" class="form-control" placeholder="Insira seu E-mail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Senha</label>
+                    <input type="password" name="senha" class="form-control" placeholder="Insira sua Senha" required>
+                </div>
+                {% with errors = get_flashed_messages(category_filter=["error"]) %}
+                    {% if errors %}
+                        {% for msg in errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div>
+                    <input class="btn btn-success" type="submit" value="Logar">
+                </div>
+                <a href="cadastro">Ainda não é cadastrado? Clique aqui</a>
+            </form>
         </div>
     </div>
 </main>
-
 {% endblock conteudo %}
