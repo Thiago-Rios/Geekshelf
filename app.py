@@ -1,13 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-#import src.entidades.db_operations as OperationsDB
 from src.entidades.produto import Produto
 from src.entidades.usuario import Usuario
 from src.entidades.db_operations import db
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'seu_segredo_aqui'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://flqprwqe:3n0mkft13qCefWX3ZLDx8313X6LdBzX5@kesavan.db.elephantsql.com/flqprwqe'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://flqprwqe:3n0mkft13qCefWX3ZLDx8313X6LdBzX5@kesavan.db.elephantsql.com/flqprwqe'
 db.init_app(app)
 
 @app.context_processor
@@ -29,10 +28,9 @@ def index():
 
 @app.route('/buscar', methods=['GET'])
 def buscar():
-    pesquisa = request.args.get('pesquisa', '')  # Obtenha o termo de pesquisa da query string
-    produtos = Produto.query.filter(Produto.titulo.ilike(f'%{pesquisa}%')).all()  # Consulta para buscar produtos correspondentes
+    pesquisa = request.args.get('pesquisa', '') 
+    produtos = Produto.query.filter(Produto.titulo.ilike(f'%{pesquisa}%')).all()  
 
-    # Renderize o template com os resultados da pesquisa
     return render_template('index.html', produtos=produtos)
 
 @app.route('/logout')

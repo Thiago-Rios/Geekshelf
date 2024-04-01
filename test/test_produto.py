@@ -30,7 +30,6 @@ class TestProduto(unittest.TestCase):
             db.drop_all()    
 
     def test_adicionando_novo_produto(self):
-        # Criar uma instância de Produto
         with app.app_context():
             titulo = "Livro Teste"
             autor = "Autor Teste"
