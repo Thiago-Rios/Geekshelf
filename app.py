@@ -4,7 +4,7 @@ from src.entidades.usuario import Usuario
 from src.entidades.db_operations import db
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'seu_segredo_aqui'
+app.config['SECRET_KEY'] = 'biblioteca_nerd'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://flqprwqe:3n0mkft13qCefWX3ZLDx8313X6LdBzX5@kesavan.db.elephantsql.com/flqprwqe'
 db.init_app(app)
@@ -134,10 +134,10 @@ def produto(produto_id):
         usuario = Usuario.query.get(usuario_id)
 
         esta_na_biblioteca = produto in usuario.minha_biblioteca
+        return render_template('produto.html', produto=produto, esta_na_biblioteca=esta_na_biblioteca)
     else:
-        esta_na_biblioteca = False
-
-    return render_template('produto.html', produto=produto, esta_na_biblioteca=esta_na_biblioteca)
+        usuario_deslogado = True
+        return render_template('produto.html', produto=produto, usuario_deslogado=usuario_deslogado)
 
 @app.route('/minha_biblioteca', methods=["GET", "POST"])
 def minha_biblioteca():
@@ -145,7 +145,9 @@ def minha_biblioteca():
         usuario = Usuario.query.filter_by(id=session['user_id']).first()
         meus_produtos = usuario.minha_biblioteca
         return render_template('minha_biblioteca.html', meus_produtos=meus_produtos)
-    return render_template('minha_biblioteca.html')
+    else:
+        usuario_deslogado = True
+        return render_template('minha_biblioteca.html', usuario_deslogado=usuario_deslogado)
 
 @app.route('/adicionar_biblioteca/<int:produto_id>', methods=['POST'])
 def adicionar_a_biblioteca(produto_id):

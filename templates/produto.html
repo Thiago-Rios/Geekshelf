@@ -12,16 +12,18 @@
               <p class="card-text"><small class="text-muted">Autor - {{ produto.autor }}</small></p>
               <p class="card-text">{{ produto.sinopse }}</p>
               <p class="card-text"><small class="text-muted">{{ produto.genero }}</small></p>
-              {% if esta_na_biblioteca %}
-                <form id="formAdicionar" method="POST" action="{{ url_for('adicionar_a_biblioteca', produto_id=produto.id) }}">
-                  <div>
-                      <input class="btn btn-success" type="submit" value="Adicionar a Biblioteca">
-                  </div>
-                </form>
-              {% else %}
+              {% if usuario_deslogado %}
+                <a href="{{ url_for('login') }}">Deseja ter acesso a sua biblioteca? Realize seu login aqui!</a>
+              {% elif usuario and produto in usuario.minha_biblioteca %}
                 <form id="formRemover" method="POST" action="{{ url_for('remover_da_biblioteca', produto_id=produto.id) }}">
                   <div>
                       <input class="btn btn-success" type="submit" value="Remover da Biblioteca">
+                  </div>
+                </form>
+              {% else %}
+                <form id="formAdicionar" method="POST" action="{{ url_for('adicionar_a_biblioteca', produto_id=produto.id) }}">
+                  <div>
+                      <input class="btn btn-success" type="submit" value="Adicionar a Biblioteca">
                   </div>
                 </form>
               {% endif %}
